@@ -387,8 +387,7 @@ export class SimpleLogin implements INodeType {
 						name: 'transferAliasesTo',
 						type: 'number',
 						default: -1,
-						description:
-							'Mailbox ID receiving aliases. Use -1 to delete aliases with the mailbox.',
+						description: 'Mailbox ID receiving aliases. Use -1 to delete aliases with the mailbox.',
 					},
 				],
 			},
@@ -527,20 +526,23 @@ export class SimpleLogin implements INodeType {
 						const searchQuery = this.getNodeParameter('searchQuery', i, '') as string;
 						const hostname = this.getNodeParameter('hostname', i, '') as string;
 
-						const aliases = await collectSimpleLoginPaginated(async (pageId) => {
-							const qs: Record<string, unknown> = { page_id: pageId };
-							if (hostname) qs.hostname = hostname;
-							if (statusFilter !== 'none') qs[statusFilter] = true;
+						const aliases = await collectSimpleLoginPaginated(
+							async (pageId) => {
+								const qs: Record<string, unknown> = { page_id: pageId };
+								if (hostname) qs.hostname = hostname;
+								if (statusFilter !== 'none') qs[statusFilter] = true;
 
-							const usePost = searchQuery.trim().length > 0;
-							const response = await simpleLoginRequest(this, {
-								method: usePost ? 'POST' : 'GET',
-								url: '/api/v2/aliases',
-								qs,
-								body: usePost ? { query: searchQuery } : undefined,
-							});
-							return (response.aliases || []) as unknown[];
-						}, returnAll ? undefined : limit);
+								const usePost = searchQuery.trim().length > 0;
+								const response = await simpleLoginRequest(this, {
+									method: usePost ? 'POST' : 'GET',
+									url: '/api/v2/aliases',
+									qs,
+									body: usePost ? { query: searchQuery } : undefined,
+								});
+								return (response.aliases || []) as unknown[];
+							},
+							returnAll ? undefined : limit,
+						);
 
 						responseData = { aliases };
 					} else if (operation === 'get') {
@@ -581,7 +583,11 @@ export class SimpleLogin implements INodeType {
 							body,
 						});
 					} else if (operation === 'createRandom') {
-						const randomAliasMode = this.getNodeParameter('randomAliasMode', i, 'default') as string;
+						const randomAliasMode = this.getNodeParameter(
+							'randomAliasMode',
+							i,
+							'default',
+						) as string;
 						const randomAliasOptions = this.getNodeParameter('randomAliasOptions', i, {}) as {
 							note?: string;
 						};
@@ -791,9 +797,13 @@ export class SimpleLogin implements INodeType {
 				}
 
 				if (typeof responseData === 'undefined') {
-					throw new NodeOperationError(this.getNode(), 'Unsupported resource/operation combination', {
-						itemIndex: i,
-					});
+					throw new NodeOperationError(
+						this.getNode(),
+						'Unsupported resource/operation combination',
+						{
+							itemIndex: i,
+						},
+					);
 				}
 
 				returnData.push({ json: responseData });
@@ -812,4 +822,3 @@ export class SimpleLogin implements INodeType {
 		return [returnData];
 	}
 }
-

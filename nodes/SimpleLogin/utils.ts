@@ -16,10 +16,7 @@ export interface SimpleLoginRequestOptions {
 	body?: unknown;
 }
 
-export async function simpleLoginRequest(
-	ctx: Ctx,
-	opts: SimpleLoginRequestOptions,
-): Promise<any> {
+export async function simpleLoginRequest(ctx: Ctx, opts: SimpleLoginRequestOptions): Promise<any> {
 	try {
 		const credentials = (await (ctx as IExecuteFunctions).getCredentials(
 			'simpleLoginApi',
@@ -111,4 +108,3 @@ export function normalizeBaseUrl(baseUrl?: string): string {
 	if (!raw) return 'https://app.simplelogin.io';
 	return raw.replace(/\/$/, '');
 }
-
