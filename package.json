@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-simplelogin",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An n8n community node for SimpleLogin (aliases, mailboxes, account, and settings).",
   "keywords": [
     "n8n-community-node-package"
