@@ -51,4 +51,3 @@ Credential test request: `GET /api/user_info`.
 ## Resources
 
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-- [SimpleLogin API documentation](api.md)
