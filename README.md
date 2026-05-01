@@ -46,7 +46,10 @@ Credential test request: `GET /api/user_info`.
 
 ## Support / Contact
 
-- Open an issue on your project repository.
+- 💬 Open an [issue on GitHub](https://github.com/Quales-N8N/n8n-nodes-simplelogin/issues)
+- 💬 Discord : @pepito9159
+- 📧 Mail: contact-n8n@quales.me
+- 🧑‍💻 Author: [Quales](https://github.com/Quales)
 
 ## Resources
 
